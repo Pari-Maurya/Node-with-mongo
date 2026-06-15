@@ -1,0 +1,56 @@
+<!*+DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chats app</title>
+  <style>
+    .chat {
+      border: 1px solid #ccc;
+      padding: 10px;
+      margin-bottom: 10px;
+    }
+    .msg {
+      background-color: #f9f9f9;
+      padding: 5px;
+      margin-top: 5px;
+    }
+    .edit-btn{
+      background-color: #4CAF50;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <h3>All chats</h3>
+  <form action="/chats/new" method="GET">
+    <button type="submit">New Chat</button>
+  </form>
+  <br><br>
+  <% for(let chat of chats) { %>
+  <div class="chat">
+    <h4>From: <%= chat.sender %></h4>
+    <div class="msg">
+      <p><%= chat.message %></p>
+      <form method="GET" action="/chats/<%= chat._id %>/edit">
+        <button class="edit-btn">Edit</button>
+      </form>
+    </div>
+    
+    <p>to: <%= chat.to %></p>
+    <p>Time: <%= chat.created_at.toString().split(' ')[4] %></p>
+    <p>date: <%= chat.created_at.toString().split(' ').slice(0,4).join('-') %></p>
+    <form method="POST" action="/chats/<%= chat._id %>?_method=DELETE">
+      <button style="background-color: red; color: white; padding: 10px 20px; border: none; cursor: pointer;">Delete</button>
+
+    </form>
+    
+  </div>
+  <% } %>
+</body>
+</html>
+
